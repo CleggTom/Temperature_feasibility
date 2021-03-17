@@ -1,5 +1,16 @@
 \documentclass{article}
+
 \usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{cleveref}
+\usepackage{graphicx}
+
+\graphicspath{ {./images/} }
+
+\usepackage[margin=1in]{geometry}
+\parskip 1.5ex % paragraph spacing
+
+
 
 \title{Temp RM}
 \author{Tom}
@@ -11,6 +22,253 @@
 
 \section{Introduction}
 
+
+
+\section{Methods}
+
+\subsection{Theory}
+\subsubsection{Feasability}
+In order to obtain a measure of feasabilty we use the generalised lottka-volterra model (GLV) (REF). This framework is commonly used to explore ecosystem dynamic properties and is regularly applied to study microbial communities (REF). The GLV describes the biomass dynamics of species $i$ in a system with $N$ species:
+
+\begin{align}
+  \frac{1}{C_i} \frac{dC_i}{dt} = r_i - a_{ii} C_i - \sum^N_{i \neq j} a_{ij} C_j \label{GLV}
+\end{align}
+
+where $r_i$ is the intrinsic growth rate of species $i$ determining the rate at which new biomass is produced ($\text{mass} \cdot \text{time}^{-1} \cdot \text{mass}^{-1} $) and $a_{ij}$ describes the strength of interactions between and within populations where the $ij$ subscript indicates the effect of species $j$ on $i$ ($\text{mass}^{-1} \cdot \text{time}^{-1}$). As we wish to determine the feasability (i.e. whether the system will support non-zero biomasses for all species at equilibrium) of this system we need to derive an expression for the equilibrium state. Though this is not analytically possible for the GLV as described in \cref{GLV}, we can use a meanfield approximation, developed by (REF) to get an expression in terms of the distributions of parameters across the ecosystem (See (SEC) full derivation). The meanfield approximation works by representing the effect of interactions in terms of their average strength across the ecosystem, instead of considering each pairwise interaction individually. This relies on the assumption that the system considered is large and the interactions between species are not significantly structured (as some evidence suggests is the case in microbial ecosystems (REFstein)). This aproximation gives us the expresion:
+
+\begin{align}
+  C^* = K - \langle K \rangle \frac{\langle \theta \rangle}{1 + \langle \theta \rangle} \label{MF_eqi}
+\end{align}
+
+where the equilibrial biomass of a single popualtion, $C^*$, is given by the species own carrying capacity (i.e. the equilibrial biomass that would be reached if grown in isolation, defined as: $K = \frac{r}{a_{ii}}$) minus the average carrying capacity across all species, $\langle K \rangle$, weighted by the effects of species interactions (where $\langle \theta \rangle$ is the average sum of interactions experienced by a focal species, normalised by their intraspecific interaction strength $\theta = \sum_{i \neq j}^{N} \alpha_{ij} = \sum_{i \neq j}^{N} \frac{a_{ij}}{a_{ii}}$). It is important to note here the loss of subscripts indicating that these parameters (including biomass) are now considered as random variables, characterised by some distribution across the ecosystem. This formuation for the equilibrial biomasses is intuative, a species is expected to reach the biomass that it would in isolation (first term of the RHS) plus the effects of any interspecific interactions (second term on RHS). The strength of these interspecific effects is determined by the average biomass conspecifics would reach and a saturating function of the strength of these interactions. If interactions are overall competitive (i.e. $\langle \theta \rangle > 0$) then we expect a reduction in equilibrial biomass whereas if they are faciliative ($\langle \theta \rangle < 0$) we expect to see an increase relative to the single species carrying capacities.
+
+Using \Cref{MF_eqi} and recalling that for a system to be feasable biomassses of all species at equilibrium must be positive (i.e. $C^* > 0$), we can write a condition for the feasability of a given population in terms of the distribtions of growth rates and interactions across the ecosystem:
+
+\begin{align}
+  K_n > \frac{\langle \theta \rangle}{1 + \langle \theta \rangle} \label{MF_feas}
+\end{align}
+
+Where $K_n = \frac{K}{\langle K \rangle}$ is the mean-normalised carrying capacity. As ecosystem feasability requires that all species biomasses are positive, the condition in \cref{MF_feas} must hold for all species in a system in order for it to be feasable. Overall this critera shows how the effects of interspecific limitation must not outweigh the effects of intraspecific limitation for a given system to be feasable. If interactions become too strongly competitive they will reduce equilibrial biomasses reached and cause extinctions. In the case where interactions experienced by a focal population are on average faciliatiive feasabiltiy of the population is guarunteed as biomasses remain positive.
+
+\subsubsection{Species Richness}
+Having derived a condition for the feasabilty we now turn to the question of species richness. To do this we use \cref{MF_feas} to express the probability of feasabiltiy as a function of the number of species in the system, $P_{\text{feas}}(N)$. We then ask given some threshold probability of feasability, $\eta$, what is the maximum number of species that a system can support?
+
+To get an expression for $P_{\text{feas}}$ we first take \Cref{MF_feas} to get the probability that a single species population within the ecosystem is feasable, $P_{\text{sp}}$, rewriting the interaction term using the definition $\langle \theta \rangle = N \langle \alpha \rangle$:
+
+\begin{align}
+P_{\text{sp}} = P\left(K_n > \frac{N \langle \alpha \rangle}{1 + N \langle \alpha \rangle} \right) \label{P_feas_sp}
+\end{align}
+
+Noting that the only parameter here varying between species is $K_n$ we can rewrite \cref{P_feas_sp} in terms of the cumulative densitiy function (CDF) $F_{K_n}(k_n) = P(k_n \leq K_n)$ giving $P_{\text{sp}} = 1 - F_{K_n}\left(\frac{N \langle \alpha \rangle}{1 + N \langle \alpha \rangle}\right)$. We can then calculate the probability that this condition is met across all species in the system (which by definition is the probability of ecosystem feasablity) by taking the product of the $P_{\text{sp}}$ values across all species in the system. As we assume all species traits are drawn from the same distribution, and thus have the same probaility of feasability this is given by:
+
+\begin{align}
+  P_{\text{feas}} = \left( 1 - F_{K_n}\left(\frac{N \langle \alpha \rangle}{1 + N \langle \alpha \rangle }\right) \right)^N \label{P_feas}
+\end{align}
+
+We can see here that as species richness $N$ increases, the total probability of feasability falls in two ways. Firstly species richness affects the strength of interactions via the $N \langle \alpha \rangle$ term. This means as species richness increases the minimum threshold for $K^n$ decreases, reducing the likelyhood of the condition being met, reducing $P_{feas}$. $N$ also affects feasability through the power term, if $P_{feas} < 1$ (which it is by definition) increasing the value of $N$ wil result in a reduction in $P_{feas}$. This can be thought of as a sampling effect with it becoming increasingly likely that at least one species does not meet the critera defined in \cref{MF_feas} as we increase the number of species in the system.
+
+Though it is not possible to solve \cref{P_feas} for $N$ analytically we can obtain an numerical solution for the maximum species richness in an ecosystem by setting some threshold probability of feasabilty $\eta$. An example of this approach is seen in \cref{P_feas_fig}
+
+\begin{figure}
+  \includegraphics[width=15cm]{P_feas}
+  \centering
+  \caption{some text}
+  \label{P_feas_fig}
+\end{figure}
+
+
+\subsubsection{Temperature}
+As seen above, the bounds on feasability (\cref{MF_feas}) and species richness (\cref{MF_N_bound}) are defined in terms of the distributions of population growth rates and the strength of intra- and interspecific interactions across the ecosystem. The distributions of these parameters are in turn expected to respond to temperature due to the biochemical kinetics of the metabolic processes that underly them. Generally we are able to represent the temperature dependence of many ecological rates, such as the parameters in \cref{MF_feas,MF_N_bound}, using the Boltzmann-Arrhenius equation:
+
+\begin{align}
+  B = B_0 e^{-E \left(\frac{1}{k T} - \frac{1}{k T_{ref}} \right) }   \label{boltz}
+\end{align}
+
+where $B$ is the rate in question, $B_0$ is the rate at some reference temperature $T_{ref}$ (in kelvin), $E$ is the temperature sensitvity of the process, $k$ the boltzmann constant and $T$ the temperature in kelvin. Though the temperature response of these rates are generally expected to be unimodal, \cref{boltz} is relevant only to the rising portion of the curve, before the peak. We focus on this section of the curve as most populations are expected to operate within this temeprature range (REF). Though there is ample evidence for the suitability of \cref{boltz} in representing the temperature dependece of growth rates in bacteria (REF), there is little work exporing the effects of temperature on the interactions between bacterial populations. However, we argue that the Boltzmann-Arrhenius is likely to be a good descriptor of this relationship due to the the fundamental metabolic basis of bacterial interactions which are mediated mostly via the production and transport of metabolites in and out of the cell (REF).
+
+By framing the distribtions of traits across the ecosytem using \cref{boltz} we can consider how the distrubtions of traits changes with temperature based on the distributions of the thermal sensitvity traits across the ecosystem, $B_0$ and $E$. By assuming a log-normal and normal distribution for these two parameters we obtain an analytical expresion for the temperature dependent distribution of some rate $B$, which itself will follow a log-normal distribution (see SEC for full derivation):
+
+\begin{align}
+  \log(B) \sim N(\mu_{\log(B)},\sigma_{\log(B)}) \quad \text{where} \quad
+    \begin{cases}
+      \mu_{\log(B)} = \mu_{\log(B_0)} - \mu_E \left(\frac{1}{k T} - \frac{1}{k T_{ref}} \right)
+      \\
+      \sigma_{\log(B)} =\sqrt{\sigma_{\log(B_0)}^2 + \sigma_E^2 \left(\frac{1}{kT} - \frac{1}{kT_{ref}} \right)^2} \label{Temp_dis}
+      \end{cases}
+\end{align}
+
+where the averages and standard deviations for the two thermal sensitvity parameters are for the underlying normal distributions of each parameter (i.e. $\log(B_0)$ and $E$ respectively). Temperature will drive changes in the parameters defining $B$ with the mean responding linearly to temperature, being equal to $\mu_{\log(B_0)}$ at $T = T_{ref}$ with a slope of $\mu_E$ and the varience having a unimodal response to temperature, driven by the squared term $\left(\frac{1}{kT} - \frac{1}{kT_{ref}} \right)^2$. As the actual mean and varience of $B$ are dependent on both the first two moments of $\log(B_0)$ ($\langle B \rangle = e^{\mu_{\log(B)} + \frac{\sigma_{\log(B)}^2}{2} }$)  the actual change in the distribution of $B$ over temperature will depend on the relative magnitude of the mean and standard derivation of the temperature sensitvity. If the average temperature senstivity is high and the variation relatively low ($\mu_{\log(B)} > \sigma_{\log(B)}$) we expect to see a dominance of the unimodal relationship, the direction of which is controled by the sign of $\mu_E$. If the average temperature senstivity is low and the varience high ($\mu_{\log(B)} < \sigma_{\log(B)}$) we expect the unimodal form to dominate, the steepness being controled by the varience term $\sigma_E^2$.
+
+\subsubsection{Temperature}
+We can apply the general description of the distribution of a trait at a given temperature in \cref{Temp_dis} to the condition for feasability in \cref{MF_feas}. The condition depends on two parameters $K_n$ and $\langle \theta \rangle$ which can be written in terms of temperature as:
+
+\begin{align}
+  \log(K_n) &\sim N(\frac{-\sigma_{K}^2}{2}, \sigma_{K})
+   \quad \text{where} \quad \sigma_{K} =
+   \sqrt{\left(\sigma_{r_0}^2 - \sigma_{a_{ii}_0}^2 \right) + \left( \left(\sigma_{E_r}^2 - \sigma_{E_{a_{ij}}}^2\right) \left(\frac{1}{kT} - \frac{1}{k T_{ref}} \right)^2 \right)} \label{Knorm_DT}
+   \\
+  \langle \theta \rangle &= N \langle \alpha \rangle = N e^{ \mu_{\alpha} + \frac{\sigma_{\alpha}^2}{2} }
+  \quad \text{where} \quad
+  \begin{cases}
+    \mu_{\alpha}  = \left( \mu_{a_{ij}_0} - \mu_{a_{ii}_0} \right) -
+                    \left( \mu_{E_{a_{ij}}} - \mu_{E_{a_{ii}}} \right)
+                    \left(\frac{1}{kT} - \frac{1}{k T_{ref}} \right)
+    \\
+    \sigma_{\alpha} =  \sqrt{\left(\sigma_{a_{ij}_0}^2 - \sigma_{a_{ii}_0}^2 \right) + \left( \left(\sigma_{E_{a_{ij}}}^2 - \sigma_{E_{a_{ii}}}^2\right) \left(\frac{1}{kT} - \frac{1}{k T_{ref}} \right)^2 \right)}
+  \end{cases} \label{theta_DT}
+\end{align}
+
+As we can see temperature will not alter the average value of the mean-normalised carrying capacity $K_n$ (which will always be 1) but will increase the vairience around this point as temperature moves away from $T_{ref}$. As $K_n$ is lognormally distributed this will result in a more left-skewed distribution, reducing the exepcted value of $K_n^{min}$. The value of $\langle \theta \rangle$ will respond to temperature based on the relative magnitudes of the exponents $\mu_{\alpha}$ and $\frac{\sigma_{\alpha}^2}{2}$, the larger of which will dominate the temperature response. As discussed above the $\langle \theta \rangle$ will show a monotonic reponse when the average temperature sensitvity value dominates and a unimodal response when the varience term dominates.
+
+\subsubsection{Temperature and Species Richness}
+
+Now we have an expression for species richness in terms of interactions and growth rates across the ecosystem, \cref{MF_N_bound}, and a way to express how these distributions change with temperature, \cref{Knorm_DT,theta_DT}, we can see how we expect temperature to affect species richness. Given that $K_n$ and $\langle \alpha \rangle$ both follow a lognormal distribution described by the distributions of their thermal sensitivty parameters we can rewrite \cref{MF_N_bound} as:
+
+\begin{align}
+  N \int_{0}^{\infty} k_n^{min} \phi \left(\frac{\log(k_n^{min}) + \frac{\sigma_K^2}{2}}{\sigma_K} \right)
+  \left[1 - \Phi\left(\frac{\log(k_n^{min}) + \frac{\sigma_K^2}{2}}{\sigma_K} \right) \right]^{N-1} dk_n^{min} -
+  \frac{N e^{ \mu_{\alpha} + \frac{\sigma_{\alpha}^2}{2} }}{N e^{ \mu_{\alpha} + \frac{\sigma_{\alpha}^2}{2} } + 1} = 0 \label{T_sp_rich}
+\end{align}
+
+where $\phi(k_n^{min})$ and $\Phi(k_n^{min})$ are the pdf and cdf for $K_n^{min}$ respectively. \Cref{T_sp_rich} can be solved for $N$ to get the max species richness at any temperature, the general pattterns of which are shown in \cref{N_temp}.
+
+\begin{figure}
+  \includegraphics[width=10cm]{N_temp}
+  \centering
+  \caption{The effect of temperature on maximum species richness varying the four parameters that describe the distribution of interspecific interactions across temperature. Note that these are expressed relative to the intraspecific interaction distribtion, for example when $\Delta\mu_E$ is above 1 the value of $\alpha$ is larger than intraspecific interactions, meaning interspecific interactions have a higher temperature senstivity. The effect of changing the distribtion of thermal parameters is the same as discussed above with the average $\mu_E$ controling the directionality of the $N$ vs Temperature curve and varience $\sigma_E$ controling the unimodality of the curve  }
+  \label{N_temp}
+\end{figure}
+
+\subsection{Data}
+\subsubsection{Meta-analysis}
+\cref{T_sp_rich} gives us a way to understand how interactions will affect species richness as temperature changes. This happens as the the distributions of interactions and carrying capacities change with temperature. This response is controled by the underlying distributions of thermal sensitivtiy parameters as shown above. Thus if we are to apply these findings to understand the effect of temperature on, for example, microbial communities, we must use an estimate of the distributions of these thermal sensitivtiy traits from these systems. Whilst empirical characterisations of microbial interactions networks are limited (especially with across temperature gradients) bacterial populations are commonly grown in isolation across multiple temperatures. These populaiton growth trajectories allow us to fit the logistic model:
+
+\begin{align}
+  \frac{dC}{dt} = rC - aC^2
+\end{align}
+
+which is equivelant to the non-interacting case of \cref{GLV}. Thus, by looking at these single species growth curves we can get estimates of growth rates and intraspecific interactions and their temperature sensitvity. The only parameter we do not have an estimate for is the response of interspecific interactions which enters the species richness formula via the normalised interaction term $\alpha$. \Cref{N_temp} shows how the estimate of species richness changes as we vary the distribution of interspecific interactions.
+
+\subsubsection{Experimental data}
+
+Can we use mesocosm data here?
+
+\section{Suplimentary}
+\subsection{Mean field derivation}
+
+In this section I show the full derivation of the meanfield approximation for equilibrial biomassses as described by (REF). Starting with the standard generalised lottka-volterra (GLV) model:
+
+\begin{align}
+  \frac{1}{C} \frac{dC}{dt} = C_i (r_i - a_{ii} C_i - \sum^N_{i \neq j} a_{ij} C_j)
+\end{align}
+
+we can rewrite the interspecific interaction term, $\sum^N_{i \neq j} a_{ij} C_j$, as:
+
+\begin{align}
+  \sum^N_{i \neq j} a_{ij} C_j = \psi_i \langle C \rangle + cov(a_{ij},C)
+\end{align}
+
+where $\psi = (N-1) \langle a_{ij} \rangle = \sum^N_{i \neq j} a_{ij}$ is the sum of interactions experienced by a single focal species. Note that we have ignored the difference between $\langle C \rangle$ and $\langle C_j \rangle$ (which does not include the focal species biomass) as this difference is expected to be on the order of $\frac{1}{N}$ and very small. The meanfield approximation takes the covarience term here to be neglibible, assuming that we have a large system where any indivudal interaction has little effect on the biomass of any species. Thus the approiximation is not suitable for systems with significant structure in the interaction matrix. Substituting this into the GLV equation and setting equal to zero gives an expression in terms of the biomass at equilibrium:
+
+\begin{align}
+  r_i - a_{ii} C_i^* - \psi_i \langle C^* \rangle = 0
+\end{align}
+
+Noting that in the absence of other species (when $\psi_i \langle C^* \rangle = 0$) we can obtain an expresion for the carrying capacity, $C_i^* = r_i / a_{ii} = K_i$, we can divide through the whole equation above by $a_{ii}$ to get:
+
+\begin{align}
+  \frac{r_i}{a_{ii}} - C_i^* - \frac{\psi_i}{a_{ii}} \langle C^* \rangle = 0
+  \\
+  K_i - C_i^* - \theta_i \langle C^* \rangle = 0
+\end{align}
+
+reducing the expression to two parameters giving the species carrying capacity $K$ and the total sum of interactions normalised by intraspecific interactions $\theta = \sum_{i \neq j}^N \frac{a_{ij}{a_{ii}}}$. Solving this for $C_i^*$ leaves us with an expression that includes the average biomass in the system:
+
+\begin{align}
+  C_i^* = K_i - \theta_i \langle C^* \rangle
+\end{align}
+
+which we can get an expresion for by considering the parameters $K_i$ and $\theta_i$ and biomass $C$ as random variables, allowing us to take the expectation across the system giving:
+
+\begin{align}
+  \langle C^* \rangle = \langle K \rangle - \langle \theta \rangle \langle C^* \rangle
+  \\
+  \langle C^* \rangle = \langle K \rangle \frac{1}{1 + \langle \theta \rangle}
+\end{align}
+
+substituting this into the equation above we can then get an expression for the equilibrial biomass:
+
+\begin{align}
+    C^* = K - \langle K \rangle \frac{\theta}{1 + \langle \theta \rangle}
+\end{align}
+
+Finally noting that $\theta = \frac{\sum^N_{i \neq j} a_{ij}}{a_{ii}} = \sum_{i \neq j}^N \frac{a_{ij}{a_{ii}}} $ we can see that as the sum of $N$ random variables, $\theta$ is what is known as a "self-averaging". This means that as $N$ increases the value of $\theta$ tends towards $\langle \theta \rangle$. Thus as long as $N$ is large (as is aready assumed above) we can write the equilibrial biomass as:
+
+\begin{align}
+    C^* = K- \langle K \rangle \frac{\langle \theta \rangle}{1 + \langle \theta \rangle}
+\end{align}
+
+giving us the final expression seen in \cref{MF_eqi}.
+
+\subsection{Distributions of rates across temperature}
+
+In order to derive the temperature dependent distribution for some rate $B$ we consider the Boltzmann-Arrhenius equation as shown in \cref{boltz}. This equation gives the rate $B$ as a function of temperature $T$ and two species specific parameters, the normalisation constant $B_0$ and temperature sensitivty $E$:
+
+\begin{align}
+  B(T) = B_0 e^{-E \left(\frac{1}{kT} - \frac{1}{kT_{ref}} \right) }
+\end{align}
+
+This equation allows us to consider the distribution of $B$ across the ecosystem in terms of the distribtions of these species specific parameters and temperature. If we assume that $B_0$ and $E$ are distributed independently, following log-normal and normal distributions, we can take the log
+
+
+\begin{align}
+  \log(B(T)) = \log(B_0) -E \left(\frac{1}{kT} - \frac{1}{kT_{ref}} \right)
+\end{align}
+
+
+\begin{align}
+  \langle \log(B(T)) \rangle  = \langle \log(B_0) \rangle - \langle E \rangle \left(\frac{1}{kT} - \frac{1}{kT_{ref}} \right)
+  \\
+  \text{Var}(B_T) = \text{Var}(\log(B_0)) + \text{Var}(E) \left(\frac{1}{kT} - \frac{1}{kT_{ref}} \right)^2
+\end{align}
+
+\begin{align}
+  \log(B(T)) &\sim \text{N}(\langle \log(B(T)) \rangle  , \text{Var}(B_T))
+  \\
+  &\sim \text{N}(\langle \log(B_0) \rangle - \langle E \rangle \left(\frac{1}{kT} - \frac{1}{kT_{ref}} \right),
+               \text{Var}(\log(B_0)) + \text{Var}(E) \left(\frac{1}{kT} - \frac{1}{kT_{ref}} \right)^2)
+\end{align}
+
+\section{Extra Notes}
+\subsubsection{Species Richness (more complex...)}
+Having derived a condition for the feasabilty of a given ecosystem we now turn to the question of species richness. To do this we ask given a specific distribution of growth rates and interaction strengths, what is the maximum number of species the ecosystem can have and remain feasable? Species richness, $N$, enters the condition for feasability in \cref{MF_feas} in two places, affecting the strength of interactions $\theta$ and the minimum value of $K_n$ in the system. $N$ affects the average strength of interactions experienced by a focal species as a simple linear realtionship with average interaction strength as seen in the definition, $\langle \theta \rangle = N \langle \alpha \rangle$. In other words as we add more species any indivdual popoulation will on average expereience stronger interspecific interactions. Thus the overall effect of interactions will saturate to $1$ as $N$ increases as:
+
+\begin{align}
+  \lim_{N \to \infty } \frac{N \langle \alpha \rangle}{1 + N \langle \alpha \rangle} = 1
+\end{align}
+
+The relationship between the minimum value of $K_n$ and $N$ is more complex, but generaly the expected minimum value of $K_n$ will decrease as $N$ increases, as the likelyhood of drawing a smaller value of $K_n$ becomes greater the more species there are. We can obtain an analytical expresion for the expected value of this minimum:
+
+\begin{align}
+  E[K_n^{min}] &= N \int_{-\infty}^{\infty} k_n^{min} f_{K_n}(k_n^{min}) \left[1 -  F_{K_n}(k_n^{min}) \right]^{N-1} dk_n^{min}
+\\
+               &= N I(N)
+\end{align}
+
+where $f_{K_n}(k_n)$ and $F_{K_n}(k_n)$ are the pdf and cdf of the distribution of $K_n$ respectively. Though a closed form solution does not for most distribuions of $K_n$ the expresion above can be solved via numerical integration. This allows us to rewrite the feasability condition in terms of $N$ where the upper bound of species richness is reached when the two sides are equal:
+
+\begin{align}
+  N I(N) - \frac{N \langle \alpha \rangle}{N \langle \alpha \rangle + 1} = 0 \label{MF_N_bound}
+\end{align}
+
+We can solve \cref{MF_N_bound} for $N$ to get the upper bound on species richness. A numerical example is shown in \cref{N_func_plot}, illustrating the effect of $N$ on these functions and the point where maximum feasible species richness is reached.
+
+\begin{figure}
+  \includegraphics[width=10cm]{N_func_plot}
+  \centering
+  \caption{The effect of species richness $N$ on components of the feasability condition from \cref{MF_feas}. As $N$ increases the LHS, $K_n^{min}$ the minimum carrying capacity in the ecosystem, decreases whilst the RHS, $\frac{\langle \theta \rangle}{1 + \langle \theta \rangle}$, the strength of interspecific interactions, increases. As feasability occurs only when carrying capacities are higher than the effects of intraspecific interactions. The point at which they are equal represents the upper bound on the number of species the system can support.}
+  \label{N_func_plot}
+\end{figure}
 
 
 \end{document}
