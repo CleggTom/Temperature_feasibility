@@ -6,7 +6,7 @@
 \usepackage{cleveref}
 \usepackage{graphicx}
 
-\graphicspath{ {./images/} }
+\graphicspath{./docs/Figures/}
 
 \usepackage[margin=1in]{geometry}
 \parskip 1.5ex % paragraph spacing
@@ -75,6 +75,13 @@ We use \Cref{EQ:MF_eqi} to derive an expression for the feasibility of a system 
 \end{align}
 
 where $\kappa_i = \frac{K_i}{\bar{K}}$ is the mean-normalised carrying capacity. \Cref{EQ:Feas_sp} shows how a system is feasible as long as the the negative effects of interspecific interactions on the each population (RHS) do not outweigh the effects of intraspecific interactions (LHS). We tested the predictions 
+
+\begin{figure}
+    \centering
+    \includegraphics[width = 0.95\textwidth]{docs/Figures/Fig_1.pdf}
+    \caption{Caption}
+    \label{fig:Feasability_Bound}
+\end{figure}
 
 \subsection{Temperature}
 In order to relate the condition for feasibility in \cref{MF_feas} to temperature we consider how temperature affects the underlying parameters affecting population dynamics, the growth rates and and  interactions across the ecosystem. To do so we use the Boltzmann-arrhenius equation which describrs the rate of some process $B(T)$ as an exponential-like function of temperature 
