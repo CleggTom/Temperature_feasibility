@@ -37,10 +37,8 @@
 
 Temperature has long been recognised as fundamental driver of many ecological processes, affecting processes occurring at multiple levels. There is a wealth of evidence documenting these effects anywhere from the effects of temperature on individual physiology,  population growth up to community and ecosystems dynamics. These 
 
-\section{Methods}
-
-\subsection{Theory}
-\subsubsection{Model}
+\section{Theory}
+\subsection{Model}
 In order to explore feasibility and its temperature dependence we use the generalised Lottka-Volterra model (GLV) (REF). This framework is commonly used to explore ecosystem dynamic properties and is regularly applied to study complex, multi-species communities (REF). The GLV describes the dynamics of an $N$ species system where the growth of species $i$ is given by:
 
 \begin{equation} \label{EQ:GLV}
@@ -53,7 +51,7 @@ where $x_i$ is the biomass of the $i$th species, $r_i$ is it's intrinsic growth 
     \sum^N_{i \neq j} a_{ij} x_j = (N-1) \bar{a x} = (N-1) \bar{a} \bar{x} + (N-1) \text{cov}(a,c),
 \end{equation}
 
-where the bar notation, $\bar{\cdot}$, represents the average of that quantity over all $N$ species in the system. \Cref{EQ:mean_int} partitions the effects of interactions on the $i$th species into the average effect across the system, $\bar{a} \bar{x}$, and the covariance between heterospecific's biomass and the strength of interactions, $\text{cov}(a,x)$. The mean-field approximation makes two assumptions here: 1) that the covariance term is negligible, which is equivalent to saying that any individual interaction between the focal species and another species population has little effect on that heterospecific's biomass and 2) as long as the system we consider is large, the difference between the average biomass across the system and that of heterospecifics is small (on the order of $N^{-1}$) and can thus be ignored. We also make the further assumption for simplicity that intraspecific interactions are constant across species, setting $a_{ii} = 1$, the implications of are discussed further in (supplementary material?). Combining \cref{EQ:GLV,EQ:mean_int}  we can then express population dynamics in terms the average interaction strength, giving the full mean-field model:
+where the bar notation, $\bar{\cdot}$, represents the average of that quantity over all $N$ species in the system. \Cref{EQ:mean_int} partitions the effects of interactions on the $i$th species into the average effect across the system, $\bar{a} \bar{x}$, and the covariance between heterospecific's biomass and the strength of interactions, $\text{cov}(a,x)$. The mean-field approximation assumes that this second term is negligible, which is equivalent to saying that any individual interaction between the focal species and another species population has little effect on that heterospecific's biomass. We also assume here that as long as the system we consider is large ($N \gg 0$), the difference between the average biomass across the system and that of heterospecifics is small (as it is in the order $N^{-1}$) and can thus be ignored. We also make the further assumption for simplicity that intraspecific interactions are constant across species, setting $a_{ii} = 1$, the implications of this are discussed further in (supplementary material?). Combining \cref{EQ:GLV,EQ:mean_int}  we can then express population dynamics in terms the average interaction strength, giving the full mean-field model:
 
 \begin{equation} \label{EQ:MF}
     \frac{1}{x_i} \frac{dx_i}{dt} \approx r_i - x_i - \bar{a}\bar{x}.
@@ -62,32 +60,92 @@ where the bar notation, $\bar{\cdot}$, represents the average of that quantity o
 By setting \cref{EQ:MF} equal to $0$ and solving for $x_i$ we then obtain an expression for equilibrium biomass (see Supplementary):
 
 \begin{equation}\label{EQ:MF_eqi}
-  x^*_i = K_i -  \bar{K}  \frac{ (N-1)\bar{a}}{1 + (N-1)\bar{a}}, 
+  x^*_i \approx K_i -  \bar{K}  \frac{ (N-1)\bar{a}}{1 + (N-1)\bar{a}}, 
 \end{equation}
 
-where $K_i = \frac{r_i}{a_{ii}}$ is the carrying capacity, the biomass a population would reach if grown in isolation (obtained by solving \cref{EQ:MF} with $\bar{a} = 0$). \cref{EQ:MF_eqi} provides an intuitive expression for the equilibrium biomasses; a species is expected to reach the biomass that it would in isolation (first term of the RHS, $K_i$) minus the effects of any interspecific interactions (second term on RHS). The strength of these interspecific effects is determined by the average biomass heterospecifics would reach ($\bar{K}$) and a saturating function of interaction strength experienced by the focal species $(N-1)\bar{a}$. If interactions are overall competitive (i.e. $ \bar{a} > 0$) then we see a reduction in equilibrium biomass relative to the individual carrying capacities whereas if they are facilitate ($ \bar{a} < 0$) we see an increase.  
+where $K_i = \frac{r_i}{a_{ii}}$ is the carrying capacity, the biomass a population would reach if grown in isolation (obtained by solving \cref{EQ:MF} with $\bar{a} = 0$). \Cref{EQ:MF_eqi} provides an intuitive expression for the equilibrium biomasses; a species is expected to reach the biomass that it would in isolation (first term of the RHS, $K_i$) minus the effects of any interspecific interactions (second term on RHS). The strength of these interspecific effects is determined by the average biomass heterospecifics would reach ($\bar{K}$) and a saturating function of interaction strength experienced by the focal species, $(N-1)\bar{a}$. If interactions are overall competitive (i.e. $ \bar{a} > 0$) then we see a reduction in equilibrium biomass relative to the individual carrying capacities whereas if they are facilitatory ($ \bar{a} < 0$) we see an increase.  
 
-\subsection{Feasibilty}
-We use \Cref{EQ:MF_eqi} to derive an expression for the feasibility of a system in terms of the population demographic parameters (i.e. the $r_i$'s and $a_{ij}$'s). We start by recalling that a system is feasible if all species have non-zero equilibrium biomass (i.e. $x_i^* > 0 $), allowing us write a condition for feasibility of a single population. This condition must hold across all populations in order for feasibility of the whole system to be ensured:
+\subsection{Feasibility} \label{Sec:Feasibility}
+We use \Cref{EQ:MF_eqi} to derive an expression for the feasibility of a system in terms of the population demographic parameters (i.e. the $r_i$'s and $a_{ij}$'s). We start by recalling that a system is feasible if all species have non-zero equilibrium biomass (i.e. $x_i^* > 0 $), giving the condition:
 
 \begin{align} \label{EQ:Feas_sp}
   \kappa_i > \frac{(N-1)\bar{a}}{1 + (N-1)\bar{a}} \quad \text{for all} \quad i = 1 \ldots N,
 \end{align}
 
-where $\kappa_i = \frac{K_i}{\bar{K}}$ is the mean-normalised carrying capacity. \Cref{EQ:Feas_sp} shows how a system is feasible as long as the the negative effects of interspecific interactions on the each population (RHS) do not outweigh the effects of intraspecific interactions (LHS). We tested the predictions 
+where $\kappa_i = \frac{K_i}{\bar{K}}$ is the mean-normalised carrying capacity. \Cref{EQ:Feas_sp} shows how a system is feasible as long as the the negative effects of interspecific interactions on the each population (RHS) do not outweigh the effects of intraspecific interactions (LHS). We test this prediction using numerical simulations of randomly generated GLV communities (which vary in their values of normalised carrying-capacity and interaction strength), showing the analytical condition predicts the feasibility of systems well (\cref{Fig:Feasability_Bound}; Supplementary Material). 
 
-\begin{figure}
+\begin{figure}[h] 
     \centering
     \includegraphics[width = 0.5\textwidth]{docs/Figures/Fig_1.pdf}
-    \caption{Caption}
-    \label{fig:Feasability_Bound}
+    \caption[width = 0.1\textwidth]{The bound given by \cref{EQ:Feas_sp}} predicts feasibility in randomly generated GLV communities. The theoretical bound (black line) gives the minimum value for $\kappa$ below which (area shaded in red) communities are unfeasible. Feasible area shown in blue above. Each point is a randomly generated community simulated till equilibrium with feasible systems (with no extinctions) in blue and unfeasible systems in red. 
+    \label{Fig:Feasability_Bound}
 \end{figure}
 
-\subsection{Temperature}
-In order to relate the condition for feasibility in \cref{MF_feas} to temperature we consider how temperature affects the underlying parameters affecting population dynamics, the growth rates and and  interactions across the ecosystem. To do so we use the Boltzmann-arrhenius equation which describrs the rate of some process $B(T)$ as an exponential-like function of temperature 
+Using \cref{EQ:Feas_sp} we can also formulate an expression for the probability of feasibility $P_{feas}$, the chance that system is feasible given the distribution of species traits and number of species in the system. To do so we take \cref{EQ:Feas_sp} and consider $\kappa$ and $a$ as random variables, giving the distribution of the respective traits across the community (represented by the loss of subscript). In doing so we can consider $\kappa$'s cumulative density function (CDF) which gives the probability that $\kappa$ is less than or equal to some value, $F_{\kappa}(x) = P(\kappa \leq x)$. As the condition for feasibility states that $\kappa$ must be greater than the effect of interactions we can apply the CDF to \cref{EQ:Feas_sp} and write $P_{feas}$ as:
 
-There is a wealth of evidence showing that these traits vary with temperature, with variation in the thermal 
+\begin{equation} \label{EQ:P_feas}
+    P_{feas} = P \left( \kappa > \frac{(N-1)\bar{a}}{1 + (N-1)\bar{a}}  \right)^N = 
+    \left[1 - F_{\kappa}\left(\frac{(N-1)\bar{a}}{1 + (N-1)\bar{a}}\right)\right]^N
+\end{equation}
 
-As these processes are ultimately dependent on the metabolic rate of individuals (i.e. their ability to transform and utilise resources and energy from the environment) it follows that any any effect of temperatute on metabolism will affect these processes too. The effects of temperature on metabolism can be 
+thus giving the probability of feasibility as a function of the species traits (\cref{Fig:Feasability_Bound}B). Note the expression is raised to the $N$th power as the condition in the brackets must hold for all $N$ populations in the system for it to be feasible. 
+
+\subsection{Temperature} \label{SEC:Temperature}
+In order to relate the conditions for feasibility discussed in \cref{Sec:Feasibility} to temperature we consider how temperature affects the parameters determining feasibility in \cref{EQ:P_feas}, the normalised carrying capacities $\kappa$ (driven here primarily by changes in population growth rate $r$), and inter-species interactions $a$. There is a large body of empirical and theoretical work demonstrating the existence and consequences of the temperature dependence of these processes which can be explained by their dependence on metabolic rate (which determines the capacity of individuals to fuel growth and interactions) which in turn is affected by temperature through its effects on biochemical kinetics (REF). 
+
+Broadly our approach to explore the effects of temperature is to examine how variation in the responses of $\kappa$ and $a$ to temperature determine the distributions of these parameters across populations. This allows calculate these distribution at a given temperature and calculate the probability of feasibility using \cref{EQ:Feas_sp}. To do so we use a modified Boltzmann-Arrhenius equation to represent the thermal dependence of $\kappa$ and $a$ which describes the temperature dependence of some process $B(T)$ in terms of its normalisation constant $B_0$ which is the value at a reference temperature and thermal sensitivity $E$:
+
+\begin{equation} \label{EQ:Boltzmann}
+    B(T) = B_0 e^{-\frac{E}{k} \left(\frac{1}{kT} - \frac{1}{k T_{ref} }\right)},
+\end{equation}
+
+where $k$ is the Boltzmann constant and $T$ and $T_{ref}$ are the temperature and reference temperature (in kelvin) respectively. Though most ecological processes demonstrate a uni-modal response to temperature we use the monotonic form of \Cref{EQ:Boltzmann} to explore temperature dynamics in 
+ 
+We use \Cref{EQ:Boltzmann} to determine the realised distribution of growth rates and interaction strengths across species populations at a given temperature (supplementary material). Crucially in doing so we are able to make explicit the effects of variation in thermal sensitivity between  Applying this to the growth rates and interactions that determine feasibility and assuming that both parameters follow a log-normal distribution across species (a natural assumption given the exponential form of \cref{EQ:Boltzmann}, supplementary information) we obtain the expressions for $\kappa$ and $\bar{a}$:
+
+\begin{align}
+    \log(\kappa(T)) &\sim \mathcal{N}\left( -\frac{\sigma_{K}^2(T)}{2} , \sigma_{K}^2(T) \right) \quad \text{and}
+    \\ \nonumber \\ 
+    \bar{a}(T) &= \exp \left(\mu_a(T) + \frac{\sigma_a^2(T))}{2} \right),
+\end{align}
+
+where $\mu_B = \mu_{B_0} - \mu_{E} \left(\frac{1}{kT} - \frac{1}{k T_{ref} }\right)$ and $ \sigma_{B}(T)^2 &= \sigma_{B_0}^2 + \sigma_{E}^2 \left(\frac{1}{kT} - \frac{1}{k T_{ref} }\right)^2$ (replacing  $\kappa$ and $a$ as appropriate). Combining these with \cref{EQ:Feas_sp,EQ:P_feas} we can write the probability of feasibility as a function of temperature:
+
+\begin{equation} \label{EQ:P_feas_Temp}
+    P_{feas}(T) = \left[1 - F_{\kappa}\left(T , \frac{(N-1)\bar{a}(T)}{(N-1)\bar{a}(T) + 1} \right) \right]^N.
+\end{equation}
+
+
+\subsection{Species Richness} \label{SEC:N_Sp}
+Having defined the relationship between feasibility and temperature we now turn to the question of species richness. From \cref{EQ:P_feas_Temp} we can see that the number of species in an ecological community $N$ can alter its feasibility through two mechanisms. Firstly it alters the strength of interactions experienced by individual populations via the $(N-1) \bar{a}$ term. This will reduce or increase the probability of feasibility depending on the strength of $\bar{a}$. Secondly feasibility falls as the number of species increases through the $N$th power term. This arises due to need for each species in the system to meet the feasibility criteria in \cref{EQ:Feas_sp}, thus as $N$ increases the chance that this holds for all species falls.
+
+In order to explore this relationship and the influence of temperature we take \cref{EQ:P_feas_Temp} and ask at a given temperature what is the maximum number of species an community can support and maintain a certain probability of feasibility? Though ideally one would do this by taking \cref{EQ:P_feas_Temp} and solving for $N$ this is not possible for most distributions of $\kappa$ due to the complexity of their cumulative density functions. Instead we numerically solve \cref{EQ:P_feas_Temp} (REF) for $N$ across a range of temperatures allowing us to look at species richness as a function of temperature and the influence of distributions in thermal response parameters across the community (fig).
+
+\subsection{Assembly}
+
+In order to test the analytical bounds for species richness we simulate the assembly of communities. The rationale here is that 
+
+using the full GLV model in \cref{EQ:GLV} as follows . 
+
+We simulate the assembly of communties as follows (see supplementary for full details). First we define the distribution of thermal response traits (the $B_0$ and $E$ values for growth and interactions) which for a given temperature allow us to calculate the distributions of growth rates and interaction strengths as outlined in \cref{SEC:Temperature}. These distributions of demographic parameters represent the traits of the global species pool, (i.e. the pool of potential invaders). Next we initialise the community by sampling from these distributions to generate a community with a small ($N=3$) number of species. We then simulate this community until the system reaches equilibrium, remove any extinct populations and add a new invader species at a low biomass with traits drawn from the distributions as described above. This process is repeated till a stable species richness is reached. An example of an assembly trajectory is shown in FIG. 
+
+\section{Results}
+
+
+
+\section{SI}
+
+Assuming that $B_0$ and $e^{E}$ are log-normally distributed this allows us to write the distribution of $B(T)$ as:
+
+\begin{align} \label{EQ:Boltz_dist}
+    \log(B(T)) &\sim \mathcal{N}(\mu_{B}(T), \sigma_{B}(T)^2) 
+    \quad \text{where} \quad 
+     \begin{cases}
+     \mu_{B_0}(T) &=  \mu_{B_0} - \mu_{E}\mathcal{T} \\
+     \sigma_{B}(T)^2 &= \sigma_{B_0}^2 + \sigma_{E}^2 \mathcal{T}^2 
+     \end{cases}
+\end{align}
+
+and $\mu$ and $\sigma$ terms are the mean and standard deviation of the underlying normal distributions and $\mathcal{T} = \left(\frac{1}{kT} - \frac{1}{k T_{ref} }\right)$ is the normalised temperature term as seen in \cref{EQ:Boltzmann}. \Cref{EQ:Boltz_dist} shows how the distribution of rates is determined by the combination of the distributions of the normalisation constants plus the effects thermal sensitivity. Crucially the effects of temperature are determined by two ways: 1) through the average thermal sensitivity $\mu_{E}$  in the linear term $-\mu_{E} \mathcal{T}$ and 2) via the variance in thermal sensitivity $\sigma_E^2$ in the squared term $\sigma_E^2 \mathcal{T}^2$. This makes explicit the effects of the shape of the distribution of thermal sensitivities.
 
 \end{document}
