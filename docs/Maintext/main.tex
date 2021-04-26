@@ -139,6 +139,13 @@ Having defined the relationship between feasibility and temperature we now turn 
 
 In order to explore this relationship and the influence of temperature we take \cref{EQ:P_feas_Temp} and ask at a given temperature what is the maximum number of species an community can support and stay above a given probability of feasibility? Though ideally one would do this by taking \cref{EQ:P_feas_Temp} and solving for $N$ this is not possible for most distributions of $\kappa$ due to the complexity of their cumulative density functions. Instead we numerically solve \cref{EQ:P_feas_Temp} (REF) for $N$ across a range of temperatures allowing us to look at species richness as a function of temperature and the influence of distributions in thermal response parameters across the community. 
 
+\begin{figure}
+    \centering
+    \includegraphics[width = \textwidth]{docs/Figures/Fig_Nsp_Temp.pdf}
+    \caption{\textbf{\textit{Place holder:} The effects of variation in $E_a$ on the thermal sensitivity of species richness.} The relationship between species richness and temperature changes depending on the shape of the distribution of thermal sensitivities of interaction strengths, $E_a$. Plots show the shape of the N vs T relationship  }
+    \label{fig:Nsp_Temp}
+\end{figure}
+
 \subsection{Assembly}
 
 In order to test the bound on species richness we simulate the assembly of communities using the full GLV model in \cref{EQ:GLV}. Broadly we simulate assembly by starting with a small system ($N = 3$), allowing  and then sequentially invading 
