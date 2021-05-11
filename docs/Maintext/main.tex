@@ -27,9 +27,9 @@ Temperature has long been recognised as a fundamental environmental driver in ec
 
 One aspect of temperature that is particularly important is how it affects ecosystem dynamics, the process through which the structure of ecosystems change over time (REF). Ecologists have long been interested in ecosystem dynamics, especially in what they tell us about the ability of ecosystems to persist though time and respond to environmental perturbations (such as temperature)(REF). Though stability, defined as the ability of system to return to some state following a perturbation (REF), has been the focus of much of this research, a whole host of other dynamical measures have also been defined such as reactivity (the strength of the initial response of an ecosystem to a perturbation; REF), resilience (the asymptotic rate of return to equilibrium following a perturbation) and feasibility, which we focus on here. 
 
-An ecosystem is defined to be feasible if there exists a fixed point at which all populations within have positive biomass, that is, all species in the system are able to coexist at equilibrium (REF). Feasibility has recently been highlighted as an important ecosystem property due its role as a prerequisite for other aspects of ecosystem dynamics (e.g. stability, resilience, and reactivity mentioned above). This is because by definition, only the properties of fixed points that actually exist (i.e those guaranteed by the feasibility of systems) are relevant to ecosystem dynamics (REF) or in other words, a system must be feasible in the first place for many of these other dynamic measures to have meaning. Recent work has revealed the importance of species' functional traits (e.g. growth rates and interactions) in determining feasibility, showing how the feasibility condition places a constraint on these trait values within ecosystems. Importantly this work has also linked the feasibility of systems to the number of species they contain (REF) which combined, suggest that we may be able use feasibility as a way to explore patterns of species richness and link them to species traits (REF). 
+An ecosystem is defined to be feasible if there exists a fixed point at which all populations within have positive biomass, that is, all species in the system are able to coexist at equilibrium (REF). Feasibility has recently been highlighted as an important ecosystem property due its role as a prerequisite for other aspects of ecosystem dynamics (e.g. stability, resilience, and reactivity mentioned above). This is because by definition, only the properties of fixed points that actually exist (i.e those guaranteed by the feasibility of a system) are relevant to ecosystem dynamics (REF) or in other words, a system must be feasible in the first place for many of these other dynamic measures to have meaning. Recent work has revealed the importance of species' functional traits (e.g. growth rates and interactions) in determining feasibility, showing how the feasibility condition places a constraint on these trait values within ecosystems. Importantly this work has also linked the feasibility of systems to the number of species they contain (REF) which combined, suggest that we may be able use feasibility as a way to explore patterns of species richness and link them to species traits (REF). 
 
-Though no previous work has looked directly at the relationship between feasibility and temperature, there have been other attempts to understand the thermal responses of whole ecosystem properties(REF). Broadly this work has tended to use the simplifying assumption of constant temperature dependence, that all populations and traits have the same response to temperature. This allows the derivation of simple analytic predictions which often show a single monotonic (i.e. strictly increasing or decreasing) temperature response (REF). However, this approach has been met with criticism due to both work demonstrating widespread variation in thermal sensitivity of across different demographic processes and taxa and the evidence showing that many of these properties actually demonstrate uni-modal (i.e. peaked) thermal responses. Furthermore a growing body of work shows how important this variation in thermal responses (often referred to as "mismatches") can be in determining the dynamics a number of ecological contexts such as of predator-prey (REF), and virus (REF) and parasite-host (REF)  systems.  
+Though no previous work has looked directly at the relationship between feasibility and temperature, there have been other attempts to understand the thermal responses of whole ecosystem properties such as ecosystem metabolism and local species richness (REF). Broadly this work has tended to use the simplifying assumption of constant temperature dependence, that all populations and traits have the same response to temperature. This allows the derivation of simple analytic predictions which often show a single monotonic (i.e. strictly increasing or decreasing) temperature response (REF). However, this approach has been met with criticism due to both work demonstrating widespread variation in thermal sensitivity of across different demographic processes and taxa and the evidence showing that many of these properties actually demonstrate uni-modal (i.e. peaked) thermal responses. Furthermore a growing body of work shows how important this variation in thermal responses (often referred to as "mismatches") can be in determining the dynamics a number of ecological contexts such as of predator-prey (REF), and virus (REF) and parasite-host (REF)  systems.  
 
 In this paper we investigate the relationship between temperature, feasibility and its impact of the species richness in ecosystems. Broadly our approach is to utilise the previously identified relationship between feasibility and population demographic parameters (growth rates and interactions) which themselves are expected to have a temperature dependence due their dependence on metabolic rate (REF). In this way we can metabolically constrain the response of these traits to temperature and thus derive predictions regarding the temperature dependence of ecosystem feasibility and species richness. Crucially our approach differs from previous work looking at the temperature dependence of ecosystem level properties, allowing us to account for variation in their thermal response of different traits and populations within the ecosystem. Ultimately this lets us consider the effects of such variation on feasibility and species richness and provides mechanistic insight into the relationship of ecosystem dynamics with temperature.
 
@@ -47,7 +47,7 @@ where $x_i$ is the biomass of the $i$th species, $r_i$ is it's intrinsic growth 
     \sum^N_{i \neq j} a_{ij} x_j = (N-1) \bar{a x} = (N-1) \bar{a} \bar{x} + (N-1) \text{cov}(a,c),
 \end{equation}
 
-where the bar notation, $\bar{\cdot}$, represents the average of that quantity over all $N$ species in the system. \Cref{EQ:mean_int} partitions the effects of interactions on the $i$th species into the average effect across the system, $\bar{a} \bar{x}$, and the covariance between heterospecific's biomass and the strength of interactions, $\text{cov}(a,x)$. The mean-field approximation assumes that this second term is negligible, which is equivalent to saying that any individual interaction between the focal species and another species population has little effect on that heterospecific's biomass. We also assume here that the system we consider is large ($N \gg 0$), meaning that the difference between the average biomass across the system and that of heterospecifics is small (as it is in the order $N^{-1}$) and can thus be ignored. For simplicity we make the further assumption that intraspecific interactions are constant across species, setting $a_{ii} = 1$ (though this assumption can be relaxed for the mean0field approximation (REF)). Combining \cref{EQ:GLV,EQ:mean_int} we can then express population dynamics in terms the average interaction strength, giving the full mean-field model:
+where the bar notation, $\bar{\cdot}$, represents the average of that quantity over all $N$ species in the system. \Cref{EQ:mean_int} partitions the effects of interactions on the $i$th species into the average effect across the system, $\bar{a} \bar{x}$, and the covariance between heterospecific's biomass and the strength of interactions, $\text{cov}(a,x)$. The mean-field approximation assumes that this second term is negligible, which is equivalent to saying that any individual interaction between the focal species and another species population has little effect on that heterospecific's biomass. We also assume here that the system we consider is large ($N \gg 0$), meaning that the difference between the average biomass across the system and that of heterospecifics is small (as it is in the order $N^{-1}$) and can thus be ignored. For simplicity we make the further assumption that intraspecific interactions are constant across species, setting $a_{ii} = 1$ (though this assumption can be relaxed for the mean-field approximation (REF)). Combining \cref{EQ:GLV,EQ:mean_int} we can then express population dynamics in terms the average interaction strength, giving the full mean-field model:
 
 \begin{equation} \label{EQ:MF}
     \frac{1}{x_i} \frac{dx_i}{dt} \approx r_i - x_i - (N-1)\bar{a}\bar{x}.
@@ -81,13 +81,6 @@ Using \cref{EQ:Feas_sp} we can also formulate an expression for the probability 
 
 giving the probability of feasibility of an ecosystem as a function of the species traits (\cref{Fig:P_feas}). Note the expression is raised to the $N$th power as the term in the brackets must hold for all $N$ populations in the system for it to be feasible. 
 
-\begin{figure}
-    \centering
-    \includegraphics[width = 0.6\textwidth]{docs/Figures/Fig_2.pdf}
-    \caption{\textbf{The probability of feasibility $P_{feas}$ as a function of interaction strength and variation in normalised carrying capacity $\sigma_{\kappa}$}. Feasibility shows the same general pattern as \cref{Fig:Feasability_Bound}, decreasing as interactions become more negative and as the variation in $\kappa$ increases (reducing the chance that all species meet the criteria in \cref{EQ:Feas_sp}). $P_{feas}$ is calculated using \cref{EQ:P_feas} setting $N=50$ and allowing $\sigms_{\kappa}$ and $\bar{a}$ to vary such that $\sigma_{\kappa} \in [0 - 1]$ and $\bar{a} \in [-1 - 0]$}
-    \label{Fig:P_feas}
-\end{figure}
-
 \subsection{Temperature} \label{SEC:Temperature}
 In order to relate the conditions for feasibility to temperature we consider how temperature affects the parameters in \cref{EQ:P_feas}, the normalised carrying capacities $\kappa$ (driven here primarily by changes in population growth rate $r$), and inter-species interactions $a$. There is a large body of empirical and theoretical work demonstrating the existence and consequences of the temperature dependence of these processes which can be explained by their dependence on metabolic rate (REF). This determines the capacity of individuals to fuel growth and interactions which in turn is affected by temperature through its effects on biochemical kinetics (REF).
 
@@ -103,18 +96,16 @@ where $k$ is the Boltzmann constant and $T$ and $T_{ref}$ are the temperature an
     \log(B(T)) \sim \mathcal{N}\left(\mu_{B}(T) , \sigma_{B}^2(T) \right) 
     \quad \text{where} \quad
     \begin{array}{cc}
-        \mu_B &= \mu_{B_0} - \mu_{E} \left(\frac{1}{kT} - \frac{1}{k T_{ref} }\right)  \\
+        \mu_B(T) &= \mu_{B_0} - \mu_{E} \left(\frac{1}{kT} - \frac{1}{k T_{ref} }\right)  \\
         \sigma_{B}(T)^2 &= \sigma_{B_0}^2 + \sigma_{E}^2 \left(\frac{1}{kT} - \frac{1}{k T_{ref} }\right)^2
     \end{array}
 \end{align}
 
-where $\mu$ and $\sigma^2$ represent the mean and variance respectively. \Cref{EQ:Boltz_dist} makes explicit the effect of thermal sensitivity parameters on the distribution of $B(T)$ showing that the sign and magnitude of the temperature response is controlled mainly by the average thermal sensitivity, $\mu_E$, as a linear function of temperature with the variance introducing an additional quadratic term which creates curvature in the thermal response. The distribution of normalisation constants $B_0$s is present simply as an constant term in the expressions for both mean and variance. It is important to note here that as $B(T)$ is log-normally distributed it's moments are defined in terms of both the mean and variance in \cref{EQ:Boltz_dist} and thus both factors (the linear and quadratic parts) will contribute to the shape of the distribution. Applying \cref{EQ:Boltz_dist} to the distributions of $\kappa$ and $\bar{a}$ we obtain the expressions:
+where $\log(B_0)$ and $E$ are both normally distributed, with $\mu$ and $\sigma^2$ representing their mean and variance respectively. \Cref{EQ:Boltz_dist} makes explicit the effect of thermal sensitivity parameters on the distribution of $B(T)$ showing that the sign and magnitude of the temperature response is controlled mainly by the average thermal sensitivity, $\mu_E$, as a linear function of temperature with the variance introducing an additional quadratic term which creates curvature in the thermal response. The distribution of normalisation constants $B_0$s is present simply as an constant term in the expressions for both mean and variance. It is important to note here that as $B(T)$ is log-normally distributed it's moments are defined in terms of both the mean and variance in \cref{EQ:Boltz_dist} and thus both factors (the linear and quadratic parts) will contribute to the shape of the distribution. Applying \cref{EQ:Boltz_dist} to the distributions of $\kappa$ and $\bar{a}$ we obtain the expressions:
 
 \begin{align} \label{EQ:Trait_distributions}
-    \begin{array}{cc}
-        \log(\kappa(T)) &\sim \mathcal{N}\left( -\frac{\sigma_{K}^2(T)}{2} , \sigma_{K}^2(T) \right) \quad \text{and} \\ \\
+        \log(\kappa(T)) &\sim \mathcal{N}\left( -\frac{\sigma_{K}^2(T)}{2} , \sigma_{K}^2(T) \right) \quad \text{and} \\ \nonumber \\
         \bar{a}(T) &= \exp \left(\mu_a(T) + \frac{\sigma_a^2(T))}{2} \right),
-    \end{array}
 \end{align}
 
 which show how the temperature responses of $\kappa$ and $\bar{a}$ are determined by the distributions of thermal response parameters. Importantly we see that the variance terms are present in both expressions meaning that the curvature introduced by the quadratic temperature term in \cref{EQ:Boltz_dist} will be present. 
@@ -139,7 +130,7 @@ To simulate assembly we start with an empty system at a given temperature which 
 
 We relate the species richness at this quasi-equilibrium to feasibility by first applying the global trait distribution to \cref{EQ:P_feas_Temp}, allowing us to calculate $P_{feas}$ for any given species richness. By choosing a small threshold probability value (set to \SI{1e-10} here) we then obtain an estimate maximum species richness above which invasions are likely to fail (as the system will not be feasible). This is illustrated in \cref{Fig:Assembly_Example}b where it can be seen that species richness settles close to the upper bound as $P_{feas}$ approaches zero.  
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width = \textwidth]{docs/Figures/Fig_3.pdf}
     \caption{Example of a single assembly trajectory (A) and the corresponding probability of feasibility vs species richness (B). (A) shows the species richness over time for a single assembling community simulated over \SI{1e5} time steps with species $\kappa$ and $a$ values drawn from the distributions X and X respectively . The black line shows the actual number of extant species in the system over time and the red the moving average (with a window $t = x$). (B) shows the probability of feasibility (\cref{EQ:P_feas_Temp}) plotted against species richness (on the y-axis) showing how the probability of a system being feasible falls as the number of species within increases. The species richness in (A) is seen to reach a relatively stable state at around $N = 15$, which corresponds to the point where the probability of feasibility is approaching $0$.   }
@@ -150,7 +141,7 @@ We relate the species richness at this quasi-equilibrium to feasibility by first
 
 \subsection{Feasibility is predicted well by the analytical bound}
 
-To evaluate the analytical feasibility bound from \cref{EQ:Feas_sp} we numerically simulated randomly generated GLV systems with $N = 50$ and varying $\kappa$ and $\bar{a}$ values. For each of these systems we used \cref{EQ:Feas_sp} to predict if the systems would be feasible and compared this to the numerical simulations (where systems were unfeasible if any population went extinct). Overall \cref{EQ:Feas_sp} preformed well in predicting the feasibility of the randomly generated systems \cref{Fig:Feasability_Bound} with the minimum normalised carrying capacity required for feasibility increasing as interactions became more competitive \cref{Fig:Feasability_Bound}. We further demonstrate the generality of the \cref{EQ:Feas_sp} as a feasibility bound showing that it preforms well when varying the variance and distribution from which $a$ and $\kappa$ values are drawn from (\cref{SI_Sec:Feas_sims}). 
+To evaluate the analytical feasibility bound from \cref{EQ:Feas_sp} we numerically simulated randomly generated GLV systems with $N = 50$ and varying $\kappa$ and $\bar{a}$ values. For each of these systems we used \cref{EQ:Feas_sp} to predict if the systems would be feasible and compared this to the numerical simulations (where systems were unfeasible if any population went extinct). Overall \cref{EQ:Feas_sp} preformed well in predicting the feasibility of the randomly generated systems (\cref{Fig:Feasability_Bound}) with the minimum normalised carrying capacity required for feasibility increasing as interactions became more competitive \cref{Fig:Feasability_Bound}. We further demonstrate the generality of the \cref{EQ:Feas_sp} as a feasibility bound showing that it preforms well when varying the variance and distribution from which $a$ and $\kappa$ values are drawn from (\cref{SI_Sec:Feas_sims}). 
 
 \begin{figure}[h] 
     \centering
@@ -159,11 +150,18 @@ To evaluate the analytical feasibility bound from \cref{EQ:Feas_sp} we numerical
     \label{Fig:Feasability_Bound}
 \end{figure}
 
-\subsection{The distribution of thermal sensitivities ($E_a$)  determines the shape of the feasibility and species richness - temperature curve}
+\subsection{The distribution of thermal sensitivities ($E_a$)  determines the shape of the feasibility and species richness temperature curves}
 
-We looked at the effect of the distributions of thermal sensitivities $E$ on the shape of the the feasibility and species richness temperature responses. 
+To look at the effect of the distributions of thermal sensitivities $E$ on the shape of the the feasibility temperature relationship we used \cref{EQ:P_feas_Temp} to calculate $P_{feas}$ across temperature, varying the the average $\mu_{E_a}$ and variance $\sigma_{E_a}^2$ of the distribution of thermal sensitivities. As expected from the \cref{EQ:Boltz_dist} the average thermal sensitivity was seen to control the main direction and magnitude of the thermal response , with positive temperature dependence ($E_a < 0$) resulting in a decrease in $P_{feas}$ with temperature and negative temperature dependence ($E_a > 0$) resulting in an increase. Increasing the variance in $E$ resulted in a unimodal shape for the feasibility-temperature curve depending on the magnitude of the average thermal sensitvtiy $E_a$. When $\mu_{E_a}$ is small (i.e. $|E_a| \ll 1.0$) then the effect of the variance term is clearly visible and $P_{feas}$ is uni-modal. When $\mu_{E_a}$ is large it dominates and the uni modal shape is not seen over the temperature ranges considered. 
 
- Applying this approach to the distributions defined in \cref{EQ:Trait_distributions} we examine the effects of varying the distribution of thermal sensitivities on the temperature response species richness (as predicted by \cref{EQ:P_feas_Temp};\cref{fig:Nsp_Temp}). In doing so we can see that the distributions of thermal sensitives have the same qualitative effect as seen in \cref{EQ:Boltz_dist} with the average thermal response ($\mu_E$) determining the overall direction of the thermal response and the variance ($\sigma_E^2$) introducing curvature which creates a uni-modal shape.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{docs/Figures/P_feas_grid.pdf}
+    \caption{\textbf{Placeholder} The effect of changing the distribution on $E$ values on the thermal response of $P_{feas}$. Each plot shows the response of $P_{feas}$ to temperature varying either the mean ($\mu_E \in [-1 , 0 , 1]$, moving left to right) or variance ($\sigma_E \in [0, 0.5, 1]$, moving top to bottom) of thermal sensitivity.}
+    \label{Fig:P_feas_grid}
+\end{figure}
+
+We applied a similar approach to look at the effect of temperature on species richness (\cref{fig:Nsp_Temp}), taking \cref{EQ:P_feas_Temp}, varying the distribution of $E_a$ and then solving numerically for $N$. Again the resultant temperature-responses had qualitatively similar shapes to those predicted by the Boltzmann-distributions detailed in \Cref{EQ:Boltz_dist} with the average thermal response ($\mu_E$) determining the overall direction of the thermal response and the variance ($\sigma_E^2$) determining the importance of the uni-modlal shape.
 
 \begin{figure}
     \centering
@@ -172,15 +170,38 @@ We looked at the effect of the distributions of thermal sensitivities $E$ on the
     \label{fig:Nsp_Temp}
 \end{figure}
 
-\subsection{The distribution of thermal sensitvties predictes the species richness of randomly assembled GLV communities}
+\subsection{The distribution of thermal sensitivities predicts the species richness of randomly assembled GLV communities}
+
+The analytical predictions of \cref{EQ:P_feas_Temp} broadly matched the species richness patterns seen in assembling ecosystems across different temperatures (\cref{Fig:Temperature_assembly}). We simulated the random assembly of ecosystems across a temperature range of 280-300K (6.85 - 26.85 C) under three different levels of variation in $E$ ($\sigma_E \in [0.01 , 0.05 , 0.1]$ with 5 replicates, to test the analytical predictions of the species richness temperature relationship. As expected from the analytical bound (\cref{EQ:P_feas_Temp}) species richness exhibited an increasingly uni-modal shape with temperature as the variation in thermal sensitivity increased across simulations. The actual species richness reached by assembling communities matched the analytical predictions well (at a probability of feasibility threshold of \SI(1e-10)), though the actual species richness reached deviated at the lower and higher ends of the temperature scale. 
 
 \begin{figure}
     \centering
-    \includegraphics[width = \textwidth]{docs/Figures/Fig_4.pdf}
-    \caption{Caption}
+    \includegraphics[width = 0.8\textwidth]{docs/Figures/Fig_4.pdf}
+    \caption{The assembly of ecosystems at different temperatures is predicted by the analytical feasibility condition. A) Trajectories of species richness over assembly across temperature at a single level of variation in $E$ ($\sigma_a = 0.01$). Each line is the average species richness over time at a given temperature. Species richness is seen to saturate over time, with systems assembling at higher temperatures having lower species richness. B) The observed final species richness reached by the assembly simulations plotted against the analytical predictions of \cref{EQ:P_feas_Temp}. Each point is the average species richness across the 5 replicates with error bars showing the standard deviation. The blue line and shaded region represent the 1:1 line of predictions and observations, representing a probability threshold of \SI{1e-10}, with the shaded region corresponding to the richness predicted by thresholds between \SI{1e-8}-\SI{1e-12}. Overall the predictions and observations of species richness match well, with most of the points variation falling within the predicted bounds, though there is a tendency for the actual species richness to be above and bellow the predictions at low and high species richness respectively. C-E) The species richness - temperature relationship at 3 levels of variation in $E$. Each points represents the species richness reached by a single assembly simulation with the red line and shaded area representing the predicted species richness at a threshold of \SI{1e-10} and within the bounds \SI{1e-8}-\SI{1e-12}. Overall the observed species richness and predictions match well with most observations falling within the prediction bounds. Only at the extremes of temperature (e.g. at 280K in (C)) do the observations significantly fall outside the prediction bounds.}
     \label{Fig:Temperature_assembly}
 \end{figure}
 
+\section{Discussion}
+
+• We have investigated the response of ecosystem feasibility to temperature and the resultant response of species richness...
+
+Our work shows how temperature may affect the feasibility of ecosystems. This is linked to empirical work (cite petchey, new nat-evoeco paper ect.) which has show temperature to be important in  ecosystems. Our work provides a mechanistic understanding of these processes, that temperature, through its action of species demography reduces the ability of species populations to survive. This forms the basis for understanding other dynamic measures and their response to temperature.  
+
+Our work also links this very clearly to the species richness in ecosystems, showing how temperature, though its effect on demographics limits the number of species that can co-exist. This advances our understanding... . Matches the variation in Nsp vs Temp we see 
+
+Our results demonstrate the clear importance of both the average and variance in thermal sensitivity in determining feasibility. Furthermore, this result is remains when we allow systems to assemble with full GLV dynamics suggesting they are fairly robust. This is important given previous work not including variation and work that has shown the simple monotonic TPCs predicted by MTE are not suitable.
+
+Our work highlights the potential of this kind of approach. By considering variation in thermal response traits we can more accurately understand how whole systems respond. This is an important extension of theory of whole ecosystem responses to perturbation which often struggle to realistically portray perturbations. Future work should aim to extend this approach to other measures, especially recent work looking at the sequential collapse of ecosystems. 
+
+Our work has some caveats. As with any study using GLV the applicability of the model is questionable. The simple mass-action dynamics may nor be suitible for systems like microbial cross-feeding networks where more complex dynamics dominate. The key here is for future work to see if the holisitic insights from this model hold up in these situations, for example does the shape of the thermal sensitivity distribution  have the same effect?
+
+In conclusion...
+
+
+
+
+
+\newpage
 \section{Supplementary Material}
 
 \subsection{Mean-field approximation} \label{SI_Sec:Meanfield}
@@ -188,6 +209,13 @@ We looked at the effect of the distributions of thermal sensitivities $E$ on the
 \subsection{Feasibility simulations} \label{SI_Sec:Feas_sims}
 
 \subsection{Derivation of thermal response distributions} \label{SI_Sec:TPC_dist}
+
+\begin{figure}
+    \centering
+    \includegraphics[width = 0.6\textwidth]{docs/Figures/Fig_2.pdf}
+    \caption{\textbf{The probability of feasibility $P_{feas}$ as a function of interaction strength and variation in normalised carrying capacity $\sigma_{\kappa}$}. Feasibility shows the same general pattern as \cref{Fig:Feasability_Bound}, decreasing as interactions become more negative and as the variation in $\kappa$ increases (reducing the chance that all species meet the criteria in \cref{EQ:Feas_sp}). $P_{feas}$ is calculated using \cref{EQ:P_feas} setting $N=50$ and allowing $\sigms_{\kappa}$ and $\bar{a}$ to vary such that $\sigma_{\kappa} \in [0 - 1]$ and $\bar{a} \in [-1 - 0]$}
+    \label{Fig:P_feas}
+\end{figure}
 
 
 \end{document}
