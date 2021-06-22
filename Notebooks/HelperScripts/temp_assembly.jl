@@ -4,7 +4,7 @@
 
 #temperature conversion
 KtoT(K, Kref) = (1 / (8.617e-5 * K)) - (1 / (8.617e-5 * Kref))
-TtoK(T, Kref) = 1 / ((8.617e-5 * T) + (1 / Kref))
+TtoK(T, Kref) =  1 / ((8.617e-5 * T) + (1 / Kref))
 
 #boltzmann function
 function boltz(B0::Float64,E::Float64,ΔT::Float64)
@@ -122,4 +122,9 @@ function mean_no_diag(x)
     a = sum(x,dims=2) .- [x[i,i] for i = size(x)[1]]
     b = mean(a) / (size(x)[1]-1)
     return(b)
+end
+
+
+function coef_var(x)
+    std(x) / mean(x)
 end
