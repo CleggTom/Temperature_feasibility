@@ -2,15 +2,15 @@ using Pkg
 
 Pkg.activate("../.")
 
-using Plots, DifferentialEquations
-using Random, Statistics, Distributions, StatsPlots
+using DifferentialEquations
+using Random, Statistics, Distributions
 using Optim, DelimitedFiles
 
 Plots.gr()
 
 DiffEq = DifferentialEquations
 
-include("../HelperScripts/temp_assembly.jl")
+include("HelperScripts/temp_assembly.jl")
 
 
 Random.seed!(1)
@@ -29,8 +29,8 @@ function r_func_temp(T, E_σ, x...)
 end
 
 function int_func_temp(T, E_σ, p_neg, x...)
-    a = boltz.(rand(LogNormal(-1,0.05), x), rand(Normal(0.65,E_σ), x), KtoT(T, 300.0))
-    a[rand(N,N) .<= p_neg] .*= -1    
+    a = boltz.(rand(LogNormal(-0.1,0.05), x), rand(Normal(0.65,E_σ), x), KtoT(T, 300.0))
+    a[rand(Bool, x)] .*= -1.0
     return(a)
 end
 
