@@ -24,8 +24,15 @@ T_vec = range(280,300,length = N_T)
 σ_vec = [0.01, 0.05, 0.1]
 
 #Temperature dependencies
-r_func_temp(T, E_σ, x...) = boltz.(rand(LogNormal(0.0,0.5), x), rand(Normal(0.0, 0.28), x), KtoT(T, 300.0))
-int_func_temp(T, E_σ, x...) = boltz.(rand(LogNormal(-1,0.05), x), rand(Normal(0.65,E_σ), x), KtoT(T, 300.0))
+function r_func_temp(T, E_σ, x...)
+    return(boltz.(rand(LogNormal(0.0,0.5), x), rand(Normal(0.0, 0.28), x), KtoT(T, 300.0)))
+end
+
+function int_func_temp(T, E_σ, p_neg, x...)
+    a = boltz.(rand(LogNormal(-1,0.05), x), rand(Normal(0.65,E_σ), x), KtoT(T, 300.0))
+    a[rand(N,N) .<= p_neg] .*= -1    
+    return(a)
+end
 
 #callback
 
@@ -38,33 +45,31 @@ for i = 1:N_T
     Threads.@threads for j = 1:N_rep
         for k = 1:N_σ
             @show (T_vec[i] , j, k, Threads.threadid())
-        #define functions 
-        r_func(x...) = r_func_temp(T_vec[i], σ_vec[k], x...)
-        int_func(x...) = int_func_temp(T_vec[i], σ_vec[k], x...)
+            #define functions 
+            r_func(x...) = r_func_temp(T_vec[i], σ_vec[k], x...)
+            #0.6 of interactions are competitive
+            int_func(x...) = int_func_temp(T_vec[i], σ_vec[k], 0.6, x...)
 
-        cb = add_at_equi(int_func, r_func, abstol = 1e-6, reltol = 1e-6)
+            cb = add_at_equi(int_func, r_func, abstol = 1e-6, reltol = 1e-6)
 
-        #generate params
-        r = r_func(N)
-        a = int_func(N,N)
-        #set sign of interactions with p = 0.6
-        a[rand(N,N) .<= 0.6] .*= -1    
-        #set intra-specific interactions
-        [a[x,x] = -1.0 for x = 1:N]
-            
-        show(a)
-        show(mean(r_func(1000)))
-        show(std(r_func(1000)))
+            #generate params
+            r = r_func(N)
+            a = int_func(N,N)
 
-        p = Param(N, r, a, 0.0)
+            #set intra-specific interactions
+            [a[x,x] = -1.0 for x = 1:N]
 
-        prob = DiffEq.ODEProblem(dx!, x0, tspan, p)
-        sol = DiffEq.solve(prob, callback = cb, save_everystep = false)
+            show(a)
 
-        #save solution
-        Nsp_res[i,j,k] = string(get_N(sol))
-        t_res[i,j,k] = string(sol.t)
-        params_mat[i,j,k] = string( (mean(int_func(10000)), std(r_func(10000))) ) 
+            p = Param(N, r, a, 0.0)
+
+            prob = DiffEq.ODEProblem(dx!, x0, tspan, p)
+            sol = DiffEq.solve(prob, callback = cb, save_everystep = false)
+
+            #save solution
+            Nsp_res[i,j,k] = string(get_N(sol))
+            t_res[i,j,k] = string(sol.t)
+            params_mat[i,j,k] = string( (mean(int_func(10000)), std(r_func(10000))) ) 
         end
     end
 end

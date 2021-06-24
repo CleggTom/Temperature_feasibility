@@ -35,7 +35,7 @@ end
 #1) condition - detect equilibrium
 function detect_eq(integrator, abstol::Float64, reltol::Float64)
     x = !any(abs.(DiffEq.get_du(integrator)) .> abstol)
-    y = (integrator.t - integrator.p.t_stop) > 1e3    
+    y = (integrator.t - integrator.p.t_stop) > 1e3   
     return(x | y)
 end
 
