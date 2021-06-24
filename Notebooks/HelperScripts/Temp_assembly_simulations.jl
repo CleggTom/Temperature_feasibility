@@ -6,8 +6,6 @@ using DifferentialEquations
 using Random, Statistics, Distributions
 using Optim, DelimitedFiles
 
-Plots.gr()
-
 DiffEq = DifferentialEquations
 
 include("HelperScripts/temp_assembly.jl")
