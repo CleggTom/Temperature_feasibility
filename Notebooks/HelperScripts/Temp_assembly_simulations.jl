@@ -16,8 +16,7 @@ include("../HelperScripts/temp_assembly.jl")
 Random.seed!(1)
 N = 3
 x0 = rand(N)
-tspan = (0, 2e5)
-save_at = range(0.0,tspan[2], step = 1)
+tspan = (0, 1e6)
 
 #simulation parameters
 N_T, N_σ, N_rep = 25,3,5
@@ -25,34 +24,38 @@ T_vec = range(280,300,length = N_T)
 σ_vec = [0.01, 0.05, 0.1]
 
 #Temperature dependencies
-r_func_temp(T, E_σ, x...) = boltz.(rand(Normal(1.0,0.1), x), rand(Normal(0.65, E_σ), x), KtoT(T, 300.0))
-int_func_temp(T, E_σ, x...) = boltz.(rand(Normal(-0.5,0.05), x), rand(Normal(0.65,E_σ), x), KtoT(T, 300.0))
+r_func_temp(T, E_σ, x...) = boltz.(rand(LogNormal(0.0,0.5), x), rand(Normal(0.0, 0.28), x), KtoT(T, 300.0))
+int_func_temp(T, E_σ, x...) = boltz.(rand(LogNormal(-1,0.05), x), rand(Normal(0.65,E_σ), x), KtoT(T, 300.0))
 
 #callback
-
 
 #results array
 Nsp_res = Array{Any,3}(undef, N_T, N_rep, N_σ)
 t_res = Array{Any,3}(undef, N_T, N_rep, N_σ)
 params_mat = Array{Any,3}(undef,N_T,N_rep, N_σ)
 
-Threads.@threads for i = 1:N_T
-    for j = 1:N_rep
+for i = 1:N_T
+    Threads.@threads for j = 1:N_rep
         for k = 1:N_σ
             @show (T_vec[i] , j, k, Threads.threadid())
         #define functions 
         r_func(x...) = r_func_temp(T_vec[i], σ_vec[k], x...)
         int_func(x...) = int_func_temp(T_vec[i], σ_vec[k], x...)
 
-        cb = add_at_equi(int_func,r_func,abstol = 1e-6, reltol = 1e-6)
+        cb = add_at_equi(int_func, r_func, abstol = 1e-6, reltol = 1e-6)
 
         #generate params
         r = r_func(N)
         a = int_func(N,N)
-        #set positive interactions with p = 0.5
-#         a[rand(Bool,N,N)] .*= -1    
-
+        #set sign of interactions with p = 0.6
+        a[rand(N,N) .<= 0.6] .*= -1    
+        #set intra-specific interactions
         [a[x,x] = -1.0 for x = 1:N]
+            
+        show(a)
+        show(mean(r_func(1000)))
+        show(std(r_func(1000)))
+
         p = Param(N, r, a, 0.0)
 
         prob = DiffEq.ODEProblem(dx!, x0, tspan, p)
