@@ -8,7 +8,7 @@ using Optim, DelimitedFiles
 
 DiffEq = DifferentialEquations
 
-include("HelperScripts/temp_assembly.jl")
+include("temp_assembly.jl")
 
 
 Random.seed!(1)
@@ -19,17 +19,18 @@ tspan = (0, 1e6)
 #simulation parameters
 N_T, N_σ, N_rep = 25,3,5
 T_vec = range(280,300,length = N_T)
-σ_vec = [0.01, 0.05, 0.1]
+σ_vec = [0.01, 0.1, 0.25]
 
 #Temperature dependencies
 function r_func_temp(T, E_σ, x...)
-    return(boltz.(rand(LogNormal(0.0,0.5), x), rand(Normal(0.0, 0.28), x), KtoT(T, 300.0)))
+    return(boltz.(rand(LogNormal(0.0,0.5), x), rand(Normal(0.2, E_σ), x), KtoT(T, 290.0)))
 end
 
 function int_func_temp(T, E_σ, p_neg, x...)
-    a = boltz.(rand(LogNormal(-0.1,0.05), x), rand(Normal(0.65,E_σ), x), KtoT(T, 300.0))
-    a[rand(Bool, x)] .*= -1.0
-    return(a)
+    a = boltz.(rand(LogNormal(-0.1,0.05), x), rand(Normal(0.2,E_σ), x), KtoT(T, 290.0))
+    
+#     a[rand(Bool, x)] .*= -1.0
+    return(-a ./ 50)
 end
 
 #callback
@@ -57,8 +58,6 @@ for i = 1:N_T
             #set intra-specific interactions
             [a[x,x] = -1.0 for x = 1:N]
 
-            show(a)
-
             p = Param(N, r, a, 0.0)
 
             prob = DiffEq.ODEProblem(dx!, x0, tspan, p)
@@ -73,14 +72,14 @@ for i = 1:N_T
 end
 
 
-writedlm("HelperScripts/Data/N_1.csv", Nsp_res[:,:,1], ",")
-writedlm("HelperScripts/Data/N_2.csv", Nsp_res[:,:,2], ",")
-writedlm("HelperScripts/Data/N_3.csv", Nsp_res[:,:,3], ",")
+writedlm("HelperScripts/Data/Assembly/N_1.csv", Nsp_res[:,:,1], ",")
+writedlm("HelperScripts/Data/Assembly/N_2.csv", Nsp_res[:,:,2], ",")
+writedlm("HelperScripts/DataAssembly//N_3.csv", Nsp_res[:,:,3], ",")
 
-writedlm("HelperScripts/Data/t_1.csv", t_res[:,:,1], ",")
-writedlm("HelperScripts/Data/t_2.csv", t_res[:,:,2], ",")
-writedlm("HelperScripts/Data/t_3.csv", t_res[:,:,3], ",")
+writedlm("HelperScripts/Data/Assembly/t_1.csv", t_res[:,:,1], ",")
+writedlm("HelperScripts/Data/Assembly/t_2.csv", t_res[:,:,2], ",")
+writedlm("HelperScripts/Data/Assembly/t_3.csv", t_res[:,:,3], ",")
 
-writedlm("HelperScripts/Data/params_1.csv", params_mat[:,:,1], ",")
-writedlm("HelperScripts/Data/params_2.csv", params_mat[:,:,2], ",")
-writedlm("HelperScripts/Data/params_3.csv", params_mat[:,:,3], ",")
+writedlm("HelperScripts/Data/Assembly/params_1.csv", params_mat[:,:,1], ",")
+writedlm("HelperScripts/Data/Assembly/params_2.csv", params_mat[:,:,2], ",")
+writedlm("HelperScripts/Data/Assembly/params_3.csv", params_mat[:,:,3], ",")
