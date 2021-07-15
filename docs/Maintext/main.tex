@@ -106,7 +106,7 @@ Combining \cref{EQ:Trait_distributions_K,EQ:Trait_distributions_a} with the equa
 
 \subsection*{Calculating the thermal response curves of Species Richness} \label{SEC:Temp_SP_num}
 
-In order to obtain quantitative predictions of the effect of temperature on species richness from the analytic expressions derived above,  we substitute \cref{EQ:Trait_distributions_K,,EQ:Trait_distributions_a} into the expression for $P_{feas}$ (\cref{EQ:P_feas}), and numerically solve for $N$. To this end, we set a lower threshold value of $P_{feas}$, $\theta$, as well as values for the parameters controlling the distributions of the thermal responses for both $a$ and $\kappa$. We then use golden-section search optimisation to search for the maximum value of $N$ with the given $\theta$ value \citep{Mogensen2018}. Repeating this procedure at different temperatures gives the full temperature richness curve for any given set of parameters. We calculated such species richness - Temperature curves for different combinations of means and variances of thermal sensitivity of $K$ and $a$. Holding either $\kappa$ or $a$'s distributions constant at a time, we calculated species richness curves in a fully factorial manner setting ($\mu_{E} \in [-0.65, 0.0, 0.65]$ and $\sigma_{E} \in [0.01, 0.05, 0.1]$). We did not vary the average thermal sensitivity of $K$ as \cref{EQ:Trait_distributions_K} shows the realised distribution of $\kappa$ is independent of the average value.
+In order to obtain quantitative predictions of the effect of temperature on species richness from the analytic expressions derived above,  we substitute \cref{EQ:Trait_distributions_K,,EQ:Trait_distributions_a} into the expression for $P_{feas}$ (\cref{EQ:P_feas}), and numerically solve for $N$. To this end, we set a lower threshold value of $P_{feas}$, $\theta$, as well as values for the parameters controlling the distributions of the thermal responses for both $a$ and $\kappa$. We then use golden-section search optimisation to search for the maximum value of $N$ with the given $\theta$ value \citep{Mogensen2018}. Repeating this procedure at different temperatures gives the full temperature richness curve for any given set of parameters. We calculated such species richness - Temperature curves for different combinations of means and variances of thermal sensitivity of $K$ and $a$. Holding either $\kappa$ or $a$'s distributions constant at a time, we calculated species richness curves in a fully factorial manner setting ($\mu_{E} \in [-0.65, 0.0, 0.65]$ and $\sigma_{E} \in [0.01, 0.05, 0.1]$). We did not vary the average thermal sensitivity of $K$ as \cref{EQ:Trait_distributions_K} shows the realised distribution of $\kappa$ is independent of the average value. We also fix the distribution of normalisation constants, setting $\mu_{B0} = $ and $\simga_{B0} =$ as \cref{EQ:Boltz_dist} shows these parameters will not affect the overall shape of the thermal response. 
 
 \subsection*{Community assembly simulations}
 
@@ -124,7 +124,7 @@ We compiled a data set of bacterial population growth curves across different te
 
 \subsection*{The distribution of thermal sensitivities determines the thermal response of species richness}
 
-We first examined the effect of the distribution of thermal sensitivities across populations on the temperature response of species richness. As expected from the expressions for the distributions of traits across temperature in \cref{EQ:Trait_distributions_K,EQ:Trait_distributions_a}, both the mean and variance of thermal sensitivity of $a$ contributed to the shape of the species richness temperature response (\cref{Fig:N_vs_T_a}) whilst for $K$ only variance in thermal sensitivity mattered (\cref{Fig:N_vs_T_K}). Broadly, the mean and variance in thermal sensitivities had the same effect to that seen in the distributions of traits in \cref{EQ:Boltz_dist}. The average thermal sensitivity for interactions determined the overall direction and magnitude of the species richness response (\cref{Fig:N_vs_T_a}), when positive (i.e., interactions become stronger with increasing temperature) this resulted in a negative response of species richness and vice versa. The degree of variance in thermal sensitivity had the same effect for both $K$ and $a$ (\cref{Fig:N_vs_T_a,Fig:N_vs_T_K}), increasing the curvature in the thermal response of richness and, when strong enough, creating a unimodal shape.
+We first examined the effect of the distribution of thermal sensitivities across populations on the temperature response of species richness. As expected from the expressions for the distributions of traits across temperature in \cref{EQ:Trait_distributions_K,EQ:Trait_distributions_a}, both the mean and variance of thermal sensitivity of $a$ contributed to the shape of the species richness temperature response (\cref{Fig:N_vs_T_a}) whilst for $K$ only variance in thermal sensitivity mattered (\cref{Fig:N_vs_T_K}). Broadly, the mean and variance in thermal sensitivities had expected effects on species richness as predicted from \cref{EQ:Boltz_dist}. The average thermal sensitivity for interactions determined the overall direction and magnitude of the species richness response (\cref{Fig:N_vs_T_a}), with richness following expected the inverse relationship with temperature. The degree of variance in thermal sensitivity had the same effect for both $K$ and $a$ (\cref{Fig:N_vs_T_a,Fig:N_vs_T_K}), increasing the curvature in the thermal response of richness and, when strong enough, creating a unimodal shape over the temperature range considered.
 
 \begin{figure}
     \centering
@@ -133,12 +133,12 @@ We first examined the effect of the distribution of thermal sensitivities across
     \label{Fig:N_vs_T_a}
 \end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.25\textwidth]{docs/Figures/Fig_Nsp_Temp_K.pdf}
-    \caption{\textbf{Variation in the thermal sensitivity of carrying capacity alters the Species richness Temperature relationship}. As expected increasing variance in thermal sensitivity of carrying capacity $K$, represented by the coloured lines, results in greater curvature in the species richness thermal response as seen between the colored lines. Curves were generated using the method outlined in \cref{SEC:Temp_SP_num} with parameters $\sigma{\log(K_0)} = 0.5$, $\mu_{a_0} = log(0.01)$, $\sigma_{a_0} = 0.5$, $\mu_{E_a} = 0.65$ and $\sigma_{E_a} = 0.2$}
-    \label{Fig:N_vs_T_K}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.25\textwidth]{docs/Figures/Fig_Nsp_Temp_K.pdf}
+%     \caption{\textbf{Variation in the thermal sensitivity of carrying capacity alters the Species richness Temperature relationship}. As expected increasing variance in thermal sensitivity of carrying capacity $K$, represented by the coloured lines, results in greater curvature in the species richness thermal response as seen between the colored lines. Curves were generated using the method outlined in \cref{SEC:Temp_SP_num} with parameters $\sigma{\log(K_0)} = 0.5$, $\mu_{a_0} = log(0.01)$, $\sigma_{a_0} = 0.5$, $\mu_{E_a} = 0.65$ and $\sigma_{E_a} = 0.2$}
+%     \label{Fig:N_vs_T_K}
+% \end{figure}
 
 \subsection*{Empirical estimates of thermal sensitivity show variation in $E$ is relevant for community level thermal responses}
 
