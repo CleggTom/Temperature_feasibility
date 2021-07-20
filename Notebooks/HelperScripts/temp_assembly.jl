@@ -24,9 +24,9 @@ function dx!(dx,x,p,t)
     for i = 1:p.N
         dx[i] = x[i] * p.r[i]
         for j = 1:p.N
-            dx[i] += x[i] * x[j] * p.a[i,j]           
+            dx[i] += x[i] * x[j] * p.a[i,j]  
         end 
-    end
+    end    
 end
 
 
